@@ -16,4 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CSharpWithReactiveExtensions\CSharpWithReactiveExtensions.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RxMoreSamples\" />
+  </ItemGroup>
 </Project>

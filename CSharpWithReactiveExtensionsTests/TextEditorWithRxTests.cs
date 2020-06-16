@@ -18,16 +18,16 @@ namespace CSharpWithReactiveExtensionsTests
             var textEditor = new TextEditor();
 
             // Important: the event in TextEditor must follow the standard for event patterns.
-            var beforeWritingLineObservable = Observable.FromEventPattern<TextEditorLineArgs>(
+            var beforeWritingLineObservableSequence = Observable.FromEventPattern<TextEditorLineArgs>(
                 textEditor,
                 nameof(TextEditor.BeforeWritingLine));
 
-            var afterWritingLineObservable = Observable.FromEventPattern<TextEditorLineArgs>(
+            var afterWritingLineObservableSequence = Observable.FromEventPattern<TextEditorLineArgs>(
                 textEditor,
                 nameof(TextEditor.AfterWritingLine));
 
-            using var beforeWritingLineObservableDisposable = beforeWritingLineObservable.Subscribe(x => beforeWritingLineCount++);
-            using var afterWritingLineObservableDisposable = afterWritingLineObservable.Subscribe(x => afterWritingLineCount++);
+            using var beforeWritingLineObservableDisposable = beforeWritingLineObservableSequence.Subscribe(x => beforeWritingLineCount++);
+            using var afterWritingLineObservableDisposable = afterWritingLineObservableSequence.Subscribe(x => afterWritingLineCount++);
 
             textEditor.WriteLine("My first line");
             textEditor.WriteLine("My second line");
@@ -87,13 +87,13 @@ namespace CSharpWithReactiveExtensionsTests
 
             var textEditor = new TextEditor();
 
-            var usageOfSpecificWordObservable = Observable.FromEventPattern<TextEditorLineArgs>(
+            var usageOfSpecificWordObservableSequence = Observable.FromEventPattern<TextEditorLineArgs>(
                 textEditor,
                 nameof(TextEditor.BeforeWritingLine))
                 .Where(x => x.EventArgs?.LineValue?.Contains(word, StringComparison.OrdinalIgnoreCase) == true);
 
-            using var usageOfSpecificWordObservableDisposable = usageOfSpecificWordObservable.Subscribe(x => linesWithSpecificWord++);
-            
+            using var usageOfSpecificWordObservableDisposable = usageOfSpecificWordObservableSequence.Subscribe(x => linesWithSpecificWord++);
+
             textEditor.WriteLine(".NET events generally follow a few known patterns.");
             textEditor.WriteLine("Standardizing on these patterns means that developers can leverage knowledge of those standard patterns, which can be applied to any .NET event program.");
             textEditor.WriteLine("The argument list contains two arguments: the sender, and the event arguments. ");
